@@ -26,7 +26,7 @@ const Header = props => {
           noWrap
           className={classes.title}
         >
-          InTrack
+          Wellness & Health
         </Typography>
       </AppBar>
     </div>

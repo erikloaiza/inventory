@@ -9,6 +9,7 @@ import ProductList from '../Products/ProductList';
 import UpdateProduct from '../Products/UpdateProduct';
 import Search from '../Search';
 import ProductDetail from '../Products/ProductDetail';
+import Store from '../Store'
 
 const ProductRouter = () => {
   return (
@@ -29,6 +30,10 @@ const ProductRouter = () => {
       <Route 
         path={routes.SEARCH} 
         component={Search} 
+      />
+      <Route 
+        path={routes.STORE} 
+        component={Store} 
       />
       <Route
         exact

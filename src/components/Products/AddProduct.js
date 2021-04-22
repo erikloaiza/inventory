@@ -17,7 +17,7 @@ const AddProduct = props => {
 
   const addProduct = product => {
     createProduct(product).then(res => {
-      if (res) {
+      if (res.type !== 'ERROR') {
         history.push(`${DASHBOARD}/${product.category}`);
       }
     });

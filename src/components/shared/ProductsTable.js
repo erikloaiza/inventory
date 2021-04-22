@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
+import { DataGrid } from '@material-ui/data-grid';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -33,12 +34,48 @@ const useStyles = makeStyles(theme => ({
 
 const ProductsTable = props => {
   const classes = useStyles();
-  const { products } = props;
+  const { products = [] } = props;
+
+  const columns = [
+    { field: 'createdAt', headerName: 'Date' },
+    {
+      field: 'name', headerName: 'Product Name',
+      renderCell: (params) => (
+        <Link
+          to={`${DASHBOARD}/${params.getValue('name')}/${params.getValue('id')}`}
+          className={classes.link}
+        >
+          <Launch />
+          {params.getValue('name')}
+        </Link>
+      ),
+      flex: 1
+    },
+    {
+      field: 'model', headerName: 'Product Model', flex: 1
+    },
+    {
+      field: 'category', headerName: 'Product Category',
+      renderCell: (params) => (
+        <Link
+          to={`${DASHBOARD}/${params.getValue('category')}`}
+          className={classes.link}
+        >
+          <Launch />
+          {params.getValue('category')}
+        </Link>
+      ), flex: 1
+    },
+    { field: 'total', headerName: 'Total of Products' },
+  ];
 
   return (
     <Grid item xs={12}>
       <Paper className={classes.paper}>
-        <Table size="medium">
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid rows={products.map(p => ({ ...p, createdAt: Moment(p.createdAt.toDate()).format('Do MMMM YY') }))} columns={columns} pageSize={5} />
+        </div>
+        {/* <Table size="medium">
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
@@ -74,7 +111,7 @@ const ProductsTable = props => {
                       {product.category}
                     </Link>
                   </TableCell>
-                  <TableCell>{product.serials.length}</TableCell>
+                  <TableCell>{product.total}</TableCell>
                 </TableRow>
               ))
             ) : (
@@ -83,7 +120,7 @@ const ProductsTable = props => {
               </TableRow>
             )}
           </TableBody>
-        </Table>
+        </Table> */}
       </Paper>
     </Grid>
   );

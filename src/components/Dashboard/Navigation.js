@@ -122,7 +122,7 @@ const Navigation = props => {
             noWrap
             className={classes.title}
           >
-            InTrack
+            Wellness & Health Admin
           </Typography>
           <Button onClick={signOut} color="inherit">
             {user.firstName}, logout

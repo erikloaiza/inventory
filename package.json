@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.2.0",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/data-grid": "*",
     "@material-ui/icons": "^4.2.1",
+    "@material-ui/lab": "*",
+    "@zxing/library": "^0.18.4",
+    "bwip-js": "^2.1.3",
     "firebase": "^6.2.4",
     "fuse.js": "^3.4.5",
     "moment": "^2.24.0",

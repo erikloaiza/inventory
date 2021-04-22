@@ -7,11 +7,14 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import BarCode from "./code";
+
 
 import { DASHBOARD } from '../Routes/routes';
 import { removeProduct, updateProduct } from '../../actions/product';
 import SerialsList from '../shared/SerialsList';
 import ConfirmDialog from '../shared/ConfirmDialog';
+import { BarcodeFormat } from '@zxing/library';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,7 +36,7 @@ const ProductDetail = props => {
 
   return (
     <div>
-      {product && (
+      {product && (<>
         <Container component="main" maxWidth="sm">
           <Paper className={classes.root}>
             <Typography variant="h5" component="h3">
@@ -69,9 +72,24 @@ const ProductDetail = props => {
               <ConfirmDialog confirmAction={() => removeHandler(product.id)} />
             </Grid>
 
-            <SerialsList serials={product.serials} />
           </Paper>
         </Container>
+        <Container component="main" maxWidth="sm" style={{ marginTop: '2em' }}>
+          <Paper className={classes.root} style={{ textAlign: 'center' }}>
+            <Typography variant="h5" component="h3">
+              {'Product Barcode'}
+            </Typography>
+            <br />
+            <BarCode code={product.serial} />
+            <Typography component="h6">
+              {product.serial}
+            </Typography>
+            <Button variant="outlined" color="primary">
+              Download
+            </Button>
+          </Paper>
+        </Container>
+      </>
       )}
     </div>
   );

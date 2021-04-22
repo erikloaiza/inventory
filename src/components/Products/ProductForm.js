@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 
 import { useStyles } from '../auth/authStyles';
 import FormButton from '../shared/FormButton';
-import SerialsList from '../shared/SerialsList';
 
 const ProductForm = props => {
   const classes = useStyles();
@@ -17,9 +16,10 @@ const ProductForm = props => {
   const [product, setProduct] = useState({
     name: '',
     model: '',
-    serials: [],
+    serial: '',
     category: '',
     description: '',
+    total: 0
   });
 
   const [error, setError] = useState('');
@@ -43,7 +43,7 @@ const ProductForm = props => {
   const handleSubmit = e => {
     e.preventDefault();
     const { name, model, category } = product;
-    const formIsValid = name.trim() && model.trim() && category.trim();
+    const formIsValid = name.trim() && category.trim(); //model.trim() && category.trim();
     if (formIsValid) {
       setError('');
       return chooseFormAction();
@@ -52,10 +52,14 @@ const ProductForm = props => {
   };
 
   const chooseFormAction = () => {
-    if (!props.update) {
-      addProduct(product);
-    } else {
-      update(product);
+    try {
+      if (!props.update) {
+        addProduct(product);
+      } else {
+        update(product);
+      }
+    } catch (error) {
+      console.log(error)
     }
   };
 
@@ -63,16 +67,6 @@ const ProductForm = props => {
     const name = target.name;
     const value = target.value;
     setProduct(prev => ({ ...prev, [name]: value }));
-  };
-
-  const addSerial = () => {
-    if (serial.length > 2) {
-      setSerial('');
-      setProduct(prev => ({
-        ...prev,
-        serials: [...prev.serials, serial],
-      }));
-    }
   };
 
   return (
@@ -94,7 +88,6 @@ const ProductForm = props => {
         <TextField
           variant="outlined"
           margin="normal"
-          required
           fullWidth
           id="model"
           label="Product Model"
@@ -137,21 +130,22 @@ const ProductForm = props => {
           label="Product Serial"
           name="serial"
           autoComplete="serial"
-          value={serial}
-          onChange={e => setSerial(e.target.value)}
+          value={product.serial}
+          onChange={inputChange}
         />
-        <Grid container justify="flex-end">
-          <Button
-            size="small"
-            variant="outlined"
-            color="primary"
-            onClick={addSerial}
-          >
-            Add Serial
-          </Button>
-        </Grid>
-
-        <SerialsList serials={product.serials} />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="total"
+          label="Total products"
+          name="total"
+          autoComplete="total"
+          value={product.total}
+          onChange={inputChange}
+          type="number"
+        />
 
         <FormButton
           isLoading={isLoading}
@@ -159,8 +153,8 @@ const ProductForm = props => {
             update
               ? 'Save Changes'
               : categoryName
-              ? `Add New to ${categoryName}`
-              : 'Add New'
+                ? `Add New to ${categoryName}`
+                : 'Add New'
           }
         />
       </form>

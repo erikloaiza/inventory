@@ -9,7 +9,7 @@ const Recent = props => {
   return (
     <Grid item xs={12}>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        Recent Entries
+        Inventory
       </Typography>
       <ProductsTable products={props.products} />
     </Grid>

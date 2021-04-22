@@ -6,6 +6,7 @@ import {
   UPDATE_PRODUCT_SUCCESS,
   GET_PRODUCT_SUCCESS,
   REMOVE_CATEGORY_SUCCESS,
+  VALIDATE_PRODUCT_SERIAL
 } from '../actions/product';
 
 const initialState = {
@@ -26,6 +27,8 @@ const productReducer = (state = initialState, action) => {
     case DELETE_PRODUCT_SUCCESS:
       return { ...state, error: null, isLoading: false };
     case REMOVE_CATEGORY_SUCCESS:
+      return { ...state, error: null, isLoading: false };
+    case VALIDATE_PRODUCT_SERIAL:
       return { ...state, error: null, isLoading: false };
     case ERROR:
       return { ...state, isLoading: false, error: action.payload };

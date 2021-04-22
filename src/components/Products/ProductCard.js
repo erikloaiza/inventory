@@ -34,7 +34,7 @@ const ProductCard = props => {
                 {product.name}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                Number of Products: {product.serials.length}
+                Number of Products: {product.total}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                 Model: {product.model}
@@ -45,8 +45,8 @@ const ProductCard = props => {
               <Typography variant="body2" color="textSecondary" component="p">
                 Created At:
                 {moment(product.createdAt.toDate()).format(
-                  'dddd, MMMM Do YYYY, h:mm a',
-                )}
+                'dddd, MMMM Do YYYY, h:mm a',
+              )}
               </Typography>
               {product.updatedAt && (
                 <Typography variant="body2" color="textSecondary" component="p">

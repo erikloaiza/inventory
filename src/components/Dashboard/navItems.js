@@ -9,6 +9,7 @@ import Ballot from '@material-ui/icons/Ballot';
 import LibraryAdd from '@material-ui/icons/LibraryAdd';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import StoreIcon from '@material-ui/icons/Store';
 import Search from '@material-ui/icons/Search';
 
 import * as routes from '../Routes/routes';
@@ -55,6 +56,7 @@ export const mainNavItems = (
       </ListItemIcon>
       <ListItemText primary="Reports" />
     </ListItem>
+
   </div>
 );
 
@@ -67,5 +69,13 @@ export const secondaryNavItems = (
       </ListItemIcon>
       <ListItemText primary="Current month" />
     </ListItem>
+    <Link to={routes.STORE} style={link}>
+      <ListItem button>
+        <ListItemIcon>
+          <StoreIcon />
+        </ListItemIcon>
+        <ListItemText primary="Store" />
+      </ListItem>
+    </Link>
   </div>
 );
