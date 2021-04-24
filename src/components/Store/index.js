@@ -31,6 +31,8 @@ import {
 const Store = ({ addedProduct, viewProduct, createTransaction }) => {
   const video = useRef()
   const [open, setOpen] = useState(false);
+  const [openError, setOpenError] = useState(false);
+
   const [products, setProducts] = useState([])
   const [manualProductSerial, setManualProductSerial] = useState('')
   const [clientInfo, setClientInfo] = useState('')
@@ -59,21 +61,38 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
 
   useEffect(() => {
     if (addedProduct) {
-      const current = products.find(p => p.serial === addedProduct.serial)
-      if (current) {
-        updateTotal(current.serial, current.total + 1)
+      if (addedProduct.total === '0') {
+        setOpenError(`No tiems available for product: ${addedProduct.name}`)
       }
       else {
-        const product = { ...addedProduct, total: 1 }
-        setProducts([...products, product])
+        const current = products.find(p => p.serial === addedProduct.serial)
+        if (current) {
+          updateTotal(current.serial, current.total + 1)
+        }
+        else {
+          const product = { ...addedProduct, total: 1, max: addedProduct.total }
+          setProducts([...products, product])
+        }
       }
+
+
     }
   }, [addedProduct])
 
   const updateTotal = (serial, total) => {
     setProducts(products.map(x => {
-      if (x.serial === serial)
-        x.total = total
+      if (x.serial === serial) {
+        console.log(total)
+        if (x.max < total) {
+          setOpenError(`trying to add ${total} to ${x.name}, but only ${x.max} in stock`)
+        }
+        else if (total <= 0 && total !== undefined) {
+          setOpenError(`Minimum amount is 1, to remove the item use the delete button instead`)
+        }
+        else {
+          x.total = total
+        }
+      }
       return x
     }))
   }
@@ -131,7 +150,8 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
                     <TableCell>{product.model}</TableCell>
                     <TableCell><OutlinedInput type='number' value={product.total} onChange={e => updateTotal(product.serial, e.target.value)} InputProps={{
                       inputProps: {
-                        max: product.total
+                        max: product.total,
+                        min: 1
                       }
                     }} />
                       <IconButton aria-label="delete" onClick={() => removeItem(product.serial)}>
@@ -176,6 +196,11 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
       <Snackbar open={open} autoHideDuration={6000} onClose={e => setOpen(false)}>
         <MuiAlert elevation={6} variant="filled" onClose={e => setOpen(false)} severity="success">
           Saved Transaction
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar open={openError} autoHideDuration={6000} onClose={e => setOpenError(false)}>
+        <MuiAlert elevation={6} variant="filled" onClose={e => setOpen(false)} severity="error">
+          {openError}
         </MuiAlert>
       </Snackbar>
     </Grid>
