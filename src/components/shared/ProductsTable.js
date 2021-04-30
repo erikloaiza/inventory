@@ -39,6 +39,16 @@ const ProductsTable = props => {
   const columns = [
     { field: 'createdAt', headerName: 'Date' },
     {
+      field: 'price', headerName: 'Price', renderCell: (params) => {
+        let formatter = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+
+        return formatter.format(params.getValue('price') || 0)
+      }
+    },
+    {
       field: 'name', headerName: 'Product Name',
       renderCell: (params) => (
         <Link

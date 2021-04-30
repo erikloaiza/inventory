@@ -1418,7 +1418,7 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@material-ui/core@^4.1.2", "@material-ui/core@^4.11.3", "@material-ui/core@^4.9.10", "@material-ui/core@^4.9.12 || ^5.0.0-alpha.22":
+"@material-ui/core@^4.1.2", "@material-ui/core@^4.11.3", "@material-ui/core@^4.9.10", "@material-ui/core@^4.9.12 || ^5.0.0-alpha.22", "@material-ui/core@>= 4.3.0":
   "integrity" "sha512-Adt40rGW6Uds+cAyk3pVgcErpzU/qxc7KBR94jFHBYretU4AtWZltYcNsbeMn9tXL86jjVL1kuGcIHsgLgFGRw=="
   "resolved" "https://registry.npmjs.org/@material-ui/core/-/core-4.11.3.tgz"
   "version" "4.11.3"
@@ -1849,6 +1849,13 @@
   dependencies:
     "lodash.unescape" "4.0.1"
     "semver" "5.5.0"
+
+"@unicef/material-ui-currency-textfield@^0.8.6":
+  "integrity" "sha512-zXhwJbz8mRa4xVZ6zkkyn9UyXHT4CXFn1JuvkVhDFqtqPkjQXBg+/dWMlJAfX6m1CvwfxwiF9giJxJqFEsTUqg=="
+  "resolved" "https://registry.npmjs.org/@unicef/material-ui-currency-textfield/-/material-ui-currency-textfield-0.8.6.tgz"
+  "version" "0.8.6"
+  dependencies:
+    "autonumeric" "^4.5.4"
 
 "@webassemblyjs/ast@1.8.5":
   "integrity" "sha512-aJMfngIZ65+t71C3y2nBBg5FFG0Okt9m0XEgWZ7Ywgn1oMAT8cNwx00Uv1cQyHtidq0Xn94R4TAywO+LCQ+ZAQ=="
@@ -2358,6 +2365,11 @@
   "integrity" "sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg=="
   "resolved" "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   "version" "2.1.2"
+
+"autonumeric@^4.5.4":
+  "integrity" "sha512-bYnD2oD9UMZBTxSWcvXH1MTcp0w+CUBfXe4HI1QJLGzJu+O27Ny5gqzRcFuDsZB9jrZ5SJjqAG0PieJsaUdTcg=="
+  "resolved" "https://registry.npmjs.org/autonumeric/-/autonumeric-4.6.0.tgz"
+  "version" "4.6.0"
 
 "autoprefixer@^9.4.9":
   "integrity" "sha512-KJSzkStUl3wP0D5sdMlP82Q52JLy5+atf2MHAre48+ckWkXgixmfHyWmA77wFDy6jTHU6mIgXv6hAQ2mf1PjJQ=="

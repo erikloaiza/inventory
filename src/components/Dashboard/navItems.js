@@ -23,7 +23,7 @@ export const mainNavItems = (
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary="Inventory" />
       </ListItem>
     </Link>
     <Link to={routes.ADDPRODUCT} style={link}>
@@ -63,13 +63,13 @@ export const mainNavItems = (
 
 export const secondaryNavItems = (
   <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
+    <ListSubheader inset>STORE</ListSubheader>
+    {/* <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Current month" />
-    </ListItem>
+    </ListItem> */}
     <Link to={routes.STORE} style={link}>
       <ListItem button>
         <ListItemIcon>

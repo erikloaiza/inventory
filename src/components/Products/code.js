@@ -20,9 +20,9 @@ const BarCode = ({ code, ...props }) => {
         } catch (e) {
             // `e` may be a string or Error object
         }
-    }, [])
+    }, [code])
     return (
-        <img src={img} {...props} />
+        <img src={img} {...props} alt="code" />
     )
 }
 

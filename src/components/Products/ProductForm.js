@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+
 import Grid from '@material-ui/core/Grid';
 
 import { useStyles } from '../auth/authStyles';
@@ -12,14 +14,14 @@ const ProductForm = props => {
   const classes = useStyles();
   const { update, addProduct, categoryName, productById, isLoading } = props;
 
-  const [serial, setSerial] = useState('');
   const [product, setProduct] = useState({
     name: '',
     model: '',
     serial: '',
     category: '',
     description: '',
-    total: 0
+    total: 0,
+    price: 0
   });
 
   const [error, setError] = useState('');
@@ -42,8 +44,8 @@ const ProductForm = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const { name, model, category } = product;
-    const formIsValid = name.trim() && category.trim(); //model.trim() && category.trim();
+    const { name, category } = product;
+    const formIsValid = name.trim() && category.trim();
     if (formIsValid) {
       setError('');
       return chooseFormAction();
@@ -65,7 +67,7 @@ const ProductForm = props => {
 
   const inputChange = ({ target }) => {
     const name = target.name;
-    const value = target.value;
+    const value = name === 'price' ? parseFloat(target.value.replace(/,/g, '')) : target.value;
     setProduct(prev => ({ ...prev, [name]: value }));
   };
 
@@ -121,6 +123,21 @@ const ProductForm = props => {
             value={product.category}
           />
         )}
+        <CurrencyTextField
+          label="Product Price"
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="price"
+          value={product.price}
+          currencySymbol="$"
+          //minimumValue="0"
+          outputFormat="string"
+          decimalCharacter="."
+          digitGroupSeparator=","
+          onChange={inputChange}
+        />
         <TextField
           variant="outlined"
           margin="normal"

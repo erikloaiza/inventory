@@ -103,12 +103,21 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
       setProducts([])
       setClientInfo('')
       setAdditionalInfo('')
-      createTransaction({ clientInfo, additionalInfo, products, isCreditCard })
+      createTransaction({ clientInfo, additionalInfo, products, isCreditCard, total: products.map(p => p.total * p.price).reduce((a, c) => a + c) })
     }
   }
 
   const removeItem = (serial) => {
     setProducts(products.filter(x => x.serial !== serial))
+  }
+
+  const formatPrice = (price = 0) => {
+    let formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+
+    return formatter.format(price)
   }
 
   return (
@@ -141,6 +150,8 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
                   <TableCell>Product Name</TableCell>
                   <TableCell>Product Model</TableCell>
                   <TableCell>Number of Products</TableCell>
+                  <TableCell>Unit Price</TableCell>
+                  <TableCell>Total Price</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -154,12 +165,31 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
                         min: 1
                       }
                     }} />
+                    </TableCell>
+                    <TableCell>{formatPrice(product.price)}</TableCell>
+                    <TableCell>{formatPrice(product.price * product.total)}</TableCell>
+                    <TableCell>
                       <IconButton aria-label="delete" onClick={() => removeItem(product.serial)}>
                         <DeleteIcon fontSize="small" color="secondary" />
                       </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
+                <TableRow>
+                  <TableCell />
+                  <TableCell />
+                  <TableCell />
+                  <TableCell>
+                    <Typography component="h2" variant="h5" color="primary" gutterBottom xs={12}>
+                      TOTAL:
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography component="h2" variant="h5" color="primary" gutterBottom xs={12}>
+                      {formatPrice(products.map(p => p.total * p.price).reduce((a, c) => a + c))}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </Paper>

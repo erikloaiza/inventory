@@ -34,6 +34,15 @@ const ProductDetail = props => {
     });
   };
 
+  const formatPrice = (price = 0) => {
+    let formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+
+    return formatter.format(price)
+  }
+
   return (
     <div>
       {product && (<>
@@ -47,6 +56,9 @@ const ProductDetail = props => {
             </Typography>
             <Typography component="p">
               <u>Model:</u> {product.model}
+            </Typography>
+            <Typography component="p">
+              <u>Price:</u> {formatPrice(product.price)}
             </Typography>
             <Typography component="p">
               <u>Description:</u> {product.description}
@@ -71,7 +83,6 @@ const ProductDetail = props => {
               </Button>
               <ConfirmDialog confirmAction={() => removeHandler(product.id)} />
             </Grid>
-
           </Paper>
         </Container>
         <Container component="main" maxWidth="sm" style={{ marginTop: '2em' }}>
