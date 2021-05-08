@@ -21,6 +21,9 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 
+import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid';
+
 import { viewProduct } from '../../actions/product'
 import { createTransaction } from "../../actions/transaction";
 import {
@@ -74,8 +77,6 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
           setProducts([...products, product])
         }
       }
-
-
     }
   }, [addedProduct])
 
@@ -97,13 +98,51 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
     }))
   }
 
-  const saveTransaction = () => {
-    if (products.length) {
-      setOpen(true)
-      setProducts([])
-      setClientInfo('')
-      setAdditionalInfo('')
-      createTransaction({ clientInfo, additionalInfo, products, isCreditCard, total: products.map(p => p.total * p.price).reduce((a, c) => a + c) })
+  const saveTransaction = async () => {
+    try {
+      if (products.length) {
+        setOpen(true)
+        setProducts([])
+        setClientInfo('')
+        setAdditionalInfo('')
+        if (isCreditCard) {
+          const res = await axios.post(`${process.env.REACT_APP_SQUAREUP_URL}locations/${process.env.REACT_APP_SQUAREUP_LOCATION_ID}/checkouts`,
+            {
+              idempotency_key: uuidv4(),
+              order: {
+                idempotency_key: uuidv4(),
+                order: {
+                  location_id: process.env.REACT_APP_SQUAREUP_LOCATION_ID,
+                  customer_id: clientInfo,
+                  note: additionalInfo,
+                  line_items:
+                    products.map(p => ({
+                      quantity: p.total,
+                      base_price_money: {
+                        amount: p.price * 100,
+                        currency: "USD"
+                      },
+                      name: p.name
+                    }))
+                }
+              }
+
+            },
+            {
+              headers: {
+                'Authorization': `Bearer ${process.env.REACT_APP_SQUAREUP_ACCESS_TOKEN}`
+              }
+            }
+          )
+          const { checkout_page_url: checkoutUrl, id: squareUpId } = res.data;
+          const newWindow = window.open(checkoutUrl, '_blank', 'noopener,noreferrer')
+          if (newWindow) newWindow.opener = null
+          return createTransaction({ clientInfo, additionalInfo, products, isCreditCard, squareUpId, total: products.map(p => p.total * p.price).reduce((a, c) => a + c) },)
+        }
+        return createTransaction({ clientInfo, additionalInfo, products, isCreditCard, total: products.map(p => p.total * p.price).reduce((a, c) => a + c) },)
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
 

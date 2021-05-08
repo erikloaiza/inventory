@@ -8,7 +8,6 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import Ballot from '@material-ui/icons/Ballot';
 import LibraryAdd from '@material-ui/icons/LibraryAdd';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import StoreIcon from '@material-ui/icons/Store';
 import Search from '@material-ui/icons/Search';
 

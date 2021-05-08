@@ -69,6 +69,10 @@ const ProductForm = props => {
     const name = target.name;
     const value = name === 'price' ? parseFloat(target.value.replace(/,/g, '')) : target.value;
     setProduct(prev => ({ ...prev, [name]: value }));
+    if ((name === 'name' || name === 'model' || name === 'category')) {
+      const serial = product.category.split(' ').map(x => x.charAt(0)).join('') + product.model.split(' ').map(x => x.charAt(0)).join('') + product.name.split(' ').map(x => x.charAt(0)).join('') + Math.ceil(Math.random() * 100)
+      setProduct(prev => ({ ...prev, serial }));
+    }
   };
 
   return (

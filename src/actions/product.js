@@ -126,6 +126,7 @@ export const viewProduct = serial => {
       .where('serial', '==', serial)
       .get()
       .then(querySnapshot => {
+        if (!querySnapshot.docs.length) throw new Error('Product not found')
         dispatch({ type: GET_PRODUCT_SUCCESS, payload: { id: querySnapshot.docs[0].id, ...querySnapshot.docs[0].data() } });
       })
       .catch(err => {
