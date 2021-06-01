@@ -37,10 +37,10 @@ const ProductCard = props => {
                 Number of Products: {product.total}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                Model: {product.model}
+                Group: {product.group}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                Category: {product.category}
+                Sub-Group: {product.subgroup}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                 Created At:

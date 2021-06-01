@@ -23,11 +23,11 @@ const useStyles = makeStyles(theme => ({
 const ProductList = ({ categoryProducts, match, history, removeCategory }) => {
   const classes = useStyles();
   const {
-    params: { category },
+    params: { group },
   } = match;
 
-  const deleteCategory = category => {
-    removeCategory(category).then(res => {
+  const deleteCategory = group => {
+    removeCategory(group).then(res => {
       if (res) {
         history.push(routes.CATEGORYLIST);
       }
@@ -36,13 +36,13 @@ const ProductList = ({ categoryProducts, match, history, removeCategory }) => {
 
   return (
     <div>
-      <Title title={`All ${category} Products`} />
+      <Title title={`All ${group} Products`} />
       <Grid container alignItems="center">
         <Link
           to={{
             pathname: routes.ADDPRODUCT,
             state: {
-              category,
+              group,
             },
           }}
           className={classes.link}
@@ -53,11 +53,11 @@ const ProductList = ({ categoryProducts, match, history, removeCategory }) => {
             color="primary"
             className={classes.button}
           >
-            Add New {category}
+            Add New {group}
           </Button>
         </Link>
 
-        <ConfirmDialog confirmAction={() => deleteCategory(category)} />
+        <ConfirmDialog confirmAction={() => deleteCategory(group)} />
       </Grid>
 
       <Box display="flex" flexwrap="wrap">
@@ -79,9 +79,9 @@ const mapStateToProps = (state, ownProps) => {
       ordered: { products },
     },
   } = state;
-  const category = ownProps.match.params.category;
+  const group = ownProps.match.params.group;
   const categoryProducts = products
-    ? products.filter(item => item.category === category)
+    ? products.filter(item => item.group === group)
     : [];
   return {
     categoryProducts,

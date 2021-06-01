@@ -14,10 +14,10 @@ const SerialsList = ({ serials }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {serials.map((serial, index) => (
+        {serials.map((code, index) => (
           <TableRow key={index}>
             <TableCell component="th" scope="row">
-              {serial}
+              {code}
             </TableCell>
           </TableRow>
         ))}

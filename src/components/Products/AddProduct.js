@@ -13,12 +13,12 @@ const AddProduct = props => {
     history,
     location: { state },
   } = props;
-  const category = state ? state.category : null;
+  const group = state ? state.group : null;
 
   const addProduct = product => {
     createProduct(product).then(res => {
       if (res.type !== 'ERROR') {
-        history.push(`${DASHBOARD}/${product.category}`);
+        history.push(`${DASHBOARD}/${product.group}`);
       }
     });
   };
@@ -26,7 +26,7 @@ const AddProduct = props => {
   return (
     <div>
       <Title title="Add Product" />
-      <ProductForm addProduct={addProduct} categoryName={category} />
+      <ProductForm addProduct={addProduct} categoryName={group} />
     </div>
   );
 };

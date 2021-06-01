@@ -43,17 +43,17 @@ const ProductRouter = () => {
       />
       <Route
         exact
-        path={`${routes.DASHBOARD}/:category`}
+        path={`${routes.DASHBOARD}/:group`}
         component={ProductList}
       />
       <Route
         exact
-        path={`${routes.DASHBOARD}/:category/:productId`}
+        path={`${routes.DASHBOARD}/:group/:productId`}
         component={ProductDetail}
       />
       <Route
         exact
-        path={`${routes.DASHBOARD}/:category/:productId/edit`}
+        path={`${routes.DASHBOARD}/:group/:productId/edit`}
         component={UpdateProduct}
       />
     </Switch>

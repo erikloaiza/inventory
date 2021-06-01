@@ -14,7 +14,7 @@ export const createProduct = product => {
     const firestore = getFirestore();
     const userId = getState().firebase.auth.uid;
     product.total = parseInt(product.total)
-    return validateSerial(product.serial, firestore, dispatch).then(
+    return validateSerial(product.code, firestore, dispatch).then(
       isValid => {
         if (isValid) {
           return firestore
@@ -33,7 +33,7 @@ export const createProduct = product => {
             });
         }
         else {
-          return dispatch({ type: ERROR, payload: 'Serial Already exist try something else' });
+          return dispatch({ type: ERROR, payload: 'code Already exist try something else' });
         }
       }
     )
@@ -78,10 +78,10 @@ export const updateProduct = (id, product) => {
   };
 };
 
-export const validateSerial = (serial, firestore, dispatch) => {
+export const validateSerial = (code, firestore, dispatch) => {
   return firestore
     .collection('products')
-    .where('serial', '==', serial)
+    .where('code', '==', code)
     .get()
     .then(querySnapshot => {
       dispatch({ type: VALIDATE_PRODUCT_SERIAL });
@@ -92,13 +92,13 @@ export const validateSerial = (serial, firestore, dispatch) => {
     });
 }
 
-export const removeCategory = category => {
+export const removeCategory = group => {
   return (dispatch, getState, { getFirestore }) => {
     dispatch({ type: START_PRODUCT_ACTION });
     const firestore = getFirestore();
     return firestore
       .collection('products')
-      .where('category', '==', category)
+      .where('group', '==', group)
       .get()
       .then(querySnapshot => {
         let batch = firestore.batch();
@@ -117,13 +117,13 @@ export const removeCategory = category => {
   };
 };
 
-export const viewProduct = serial => {
+export const viewProduct = code => {
   return (dispatch, getState, { getFirestore }) => {
     dispatch({ type: START_PRODUCT_ACTION });
     const firestore = getFirestore();
     return firestore
       .collection('products')
-      .where('serial', '==', serial)
+      .where('code', '==', code)
       .get()
       .then(querySnapshot => {
         if (!querySnapshot.docs.length) throw new Error('Product not found')

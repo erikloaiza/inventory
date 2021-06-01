@@ -19,7 +19,7 @@ const Search = ({ products }) => {
     distance: 50,
     maxPatternLength: 12,
     minMatchCharLength: 3,
-    keys: ['name', 'category', 'serials', 'model'],
+    keys: ['name', 'group', 'serials', 'model'],
   };
 
   const fuse = new Fuse(products, fuseOptions);
@@ -39,19 +39,19 @@ const Search = ({ products }) => {
         value={searchTerm}
       />
       <Box display="flex" flexwrap="wrap">
-        {data.length > 0 
+        {data.length > 0
           ? (
-          <ProductsTable products={data} />
-        ) : searchTerm.length > 0 && data.length < 1 
-          ? (
-          <Typography variant="body2" color="secondary" component="p">
-            {`No Item "${searchTerm}" found`} 
-          </Typography>
-        ) : (
-          <Typography variant="body2" color="textSecondary" component="p">
-            Enter a search (product name, serial, model, category)
-          </Typography>
-        )}
+            <ProductsTable products={data} />
+          ) : searchTerm.length > 0 && data.length < 1
+            ? (
+              <Typography variant="body2" color="secondary" component="p">
+                {`No Item "${searchTerm}" found`}
+              </Typography>
+            ) : (
+              <Typography variant="body2" color="textSecondary" component="p">
+                Enter a search (product name, code, model, group)
+              </Typography>
+            )}
       </Box>
     </Container>
   );

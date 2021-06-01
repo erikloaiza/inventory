@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 
 import Grid from '@material-ui/core/Grid';
@@ -14,14 +17,20 @@ const ProductForm = props => {
   const classes = useStyles();
   const { update, addProduct, categoryName, productById, isLoading } = props;
 
+  const [autogenerate, setAutogenerate] = useState(false)
+
   const [product, setProduct] = useState({
+    code: '',
     name: '',
-    model: '',
-    serial: '',
-    category: '',
-    description: '',
+    price: 0,
+    presentation: '',
+    units: 0,
+    clasification: '',
+    group: '',
+    subgroup: '',
+    observation: '',
+    voucher: '',
     total: 0,
-    price: 0
   });
 
   const [error, setError] = useState('');
@@ -44,8 +53,8 @@ const ProductForm = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const { name, category } = product;
-    const formIsValid = name.trim() && category.trim();
+    const { name, group, subgroup, code } = product;
+    const formIsValid = name.trim() && group.trim() && subgroup.trim() && code.trim();
     if (formIsValid) {
       setError('');
       return chooseFormAction();
@@ -69,16 +78,48 @@ const ProductForm = props => {
     const name = target.name;
     const value = name === 'price' ? parseFloat(target.value.replace(/,/g, '')) : target.value;
     setProduct(prev => ({ ...prev, [name]: value }));
-    if ((name === 'name' || name === 'model' || name === 'category')) {
-      const serial = product.category.split(' ').map(x => x.charAt(0)).join('') + product.model.split(' ').map(x => x.charAt(0)).join('') + product.name.split(' ').map(x => x.charAt(0)).join('') + Math.ceil(Math.random() * 100)
-      setProduct(prev => ({ ...prev, serial }));
+    if ((name === 'name' || name === 'group' || name === 'subgroup')) {
+      generateCode()
     }
   };
+
+  const generateCode = () => {
+    if (autogenerate) {
+      const code = product.group.split(' ').map(x => x.charAt(0)).join('') + product.subgroup.split(' ').map(x => x.charAt(0)).join('') + product.name.split(' ').map(x => x.charAt(0)).join('') + Math.ceil(Math.random() * 100)
+      setProduct(prev => ({ ...prev, code }));
+    }
+  }
+
+  useEffect(
+    () => {
+      generateCode()
+    }, [autogenerate]
+  )
 
   return (
     <Container component="main" maxWidth="xs">
       <form className={classes.form} onSubmit={handleSubmit} noValidate>
         {error && <p>{error}</p>}
+        <div
+          style={{ display: 'flex', justifyContent: 'space-between' }}
+        >
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            id="code"
+            label="Product code"
+            name="code"
+            autoComplete="code"
+            value={product.code}
+            onChange={inputChange}
+          />
+          <FormControlLabel
+            control={<Switch color="primary" checked={autogenerate} onChange={e => setAutogenerate(p => !p)} />}
+            label="Autogenerate"
+            labelPlacement="start"
+          />
+        </div>
         <TextField
           variant="outlined"
           margin="normal"
@@ -91,42 +132,6 @@ const ProductForm = props => {
           onChange={inputChange}
           value={product.name}
         />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          id="model"
-          label="Product Model"
-          name="model"
-          autoComplete="model"
-          onChange={inputChange}
-          value={product.model}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="description"
-          label="Description"
-          name="description"
-          onChange={inputChange}
-          value={product.description}
-        />
-        {!categoryName && (
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="category"
-            label="Product Category"
-            name="category"
-            autoComplete="category"
-            onChange={inputChange}
-            value={product.category}
-          />
-        )}
         <CurrencyTextField
           label="Product Price"
           variant="outlined"
@@ -145,14 +150,82 @@ const ProductForm = props => {
         <TextField
           variant="outlined"
           margin="normal"
+          fullWidth
+          id="presentation"
+          label="Product Presentation"
+          name="presentation"
+          autoComplete="presentation"
+          onChange={inputChange}
+          value={product.presentation}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
           required
           fullWidth
-          id="serial"
-          label="Product Serial"
-          name="serial"
-          autoComplete="serial"
-          value={product.serial}
+          id="units"
+          label="Container Units"
+          name="units"
+          autoComplete="units"
+          value={product.units}
           onChange={inputChange}
+          type="number"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="clasification"
+          label="Product Clasification"
+          name="clasification"
+          autoComplete="model"
+          onChange={inputChange}
+          value={product.clasification}
+        />
+        {!categoryName && (
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="group"
+            label="Product Group"
+            name="group"
+            autoComplete="group"
+            onChange={inputChange}
+            value={product.group}
+          />
+        )}
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="subgroup"
+          label="Product Sub-Group"
+          name="subgroup"
+          autoComplete="subgroup"
+          onChange={inputChange}
+          value={product.subgroup}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="observation"
+          label="Observations "
+          name="observation"
+          onChange={inputChange}
+          value={product.observation}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          id="voucher"
+          label="Voucher "
+          name="voucher"
+          onChange={inputChange}
+          value={product.voucher}
         />
         <TextField
           variant="outlined"

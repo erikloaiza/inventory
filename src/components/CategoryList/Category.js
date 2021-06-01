@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 150,
   },
-  category: {
+  group: {
     flex: 1,
   },
   link: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 const Category = props => {
   const classes = useStyles();
-  const { category } = props;
+  const { group } = props;
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -40,13 +40,13 @@ const Category = props => {
           component="h1"
           variant="h4"
           color="primary"
-          className={classes.category}
+          className={classes.group}
         >
-          {category}
+          {group}
         </Typography>
         <div>
-          <Link to={category} className={classes.link}>
-            {`View more on ${category} category`}
+          <Link to={group} className={classes.link}>
+            {`View more on ${group} group`}
           </Link>
         </div>
       </Paper>
@@ -55,7 +55,7 @@ const Category = props => {
 };
 
 Category.propTypes = {
-  category: PropTypes.string,
+  group: PropTypes.string,
 };
 
 export default Category;

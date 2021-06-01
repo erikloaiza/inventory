@@ -62,19 +62,19 @@ const ProductsTable = props => {
       flex: 1
     },
     {
-      field: 'model', headerName: 'Product Model', flex: 1
-    },
-    {
-      field: 'category', headerName: 'Product Category',
+      field: 'group', headerName: 'Product Group',
       renderCell: (params) => (
         <Link
-          to={`${DASHBOARD}/${params.getValue('category')}`}
+          to={`${DASHBOARD}/${params.getValue('group')}`}
           className={classes.link}
         >
           <Launch />
-          {params.getValue('category')}
+          {params.getValue('group')}
         </Link>
       ), flex: 1
+    },
+    {
+      field: 'subgroup', headerName: 'Product Sub Group', flex: 1
     },
     { field: 'total', headerName: 'Total of Products' },
   ];

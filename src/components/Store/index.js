@@ -68,9 +68,9 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
         setOpenError(`No tiems available for product: ${addedProduct.name}`)
       }
       else {
-        const current = products.find(p => p.serial === addedProduct.serial)
+        const current = products.find(p => p.code === addedProduct.code)
         if (current) {
-          updateTotal(current.serial, current.total + 1)
+          updateTotal(current.code, current.total + 1)
         }
         else {
           const product = { ...addedProduct, total: 1, max: addedProduct.total }
@@ -80,9 +80,9 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
     }
   }, [addedProduct])
 
-  const updateTotal = (serial, total) => {
+  const updateTotal = (code, total) => {
     setProducts(products.map(x => {
-      if (x.serial === serial) {
+      if (x.code === code) {
         console.log(total)
         if (x.max < total) {
           setOpenError(`trying to add ${total} to ${x.name}, but only ${x.max} in stock`)
@@ -146,8 +146,8 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
     }
   }
 
-  const removeItem = (serial) => {
-    setProducts(products.filter(x => x.serial !== serial))
+  const removeItem = (code) => {
+    setProducts(products.filter(x => x.code !== code))
   }
 
   const formatPrice = (price = 0) => {
@@ -198,7 +198,7 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
                   <TableRow key={product.id}>
                     <TableCell>{product.name}</TableCell>
                     <TableCell>{product.model}</TableCell>
-                    <TableCell><OutlinedInput type='number' value={product.total} onChange={e => updateTotal(product.serial, e.target.value)} InputProps={{
+                    <TableCell><OutlinedInput type='number' value={product.total} onChange={e => updateTotal(product.code, e.target.value)} InputProps={{
                       inputProps: {
                         max: product.total,
                         min: 1
@@ -208,7 +208,7 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
                     <TableCell>{formatPrice(product.price)}</TableCell>
                     <TableCell>{formatPrice(product.price * product.total)}</TableCell>
                     <TableCell>
-                      <IconButton aria-label="delete" onClick={() => removeItem(product.serial)}>
+                      <IconButton aria-label="delete" onClick={() => removeItem(product.code)}>
                         <DeleteIcon fontSize="small" color="secondary" />
                       </IconButton>
                     </TableCell>
@@ -244,7 +244,7 @@ const Store = ({ addedProduct, viewProduct, createTransaction }) => {
           <video ref={video} width={200}></video>
         </Grid>
         <Grid item xs={10}>
-          <TextField label="Serial" variant="outlined" value={manualProductSerial} onChange={e => setManualProductSerial(e.target.value)} />
+          <TextField label="code" variant="outlined" value={manualProductSerial} onChange={e => setManualProductSerial(e.target.value)} />
         </Grid>
         <Grid item xs={2}>
           <IconButton color="primary" aria-label="Search by Code" onClick={() => viewProduct(manualProductSerial)}>

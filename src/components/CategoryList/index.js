@@ -14,8 +14,8 @@ const CategoryList = props => {
       <Title title="Categories" />
       <Box display="flex" flexWrap="wrap">
         {categories && categories.length > 0 ? (
-          categories.map(category => (
-            <Category key={category} category={category} />
+          categories.map(group => (
+            <Category key={group} group={group} />
           ))
         ) : (
           <Empty />
@@ -31,9 +31,9 @@ CategoryList.propTypes = {
 
 const getUniqueCategories = products => {
   if (products) {
-    const categories = products.map(product => product.category);
-    return categories.filter((category, index) => {
-      return categories.indexOf(category) === index;
+    const categories = products.map(product => product.group);
+    return categories.filter((group, index) => {
+      return categories.indexOf(group) === index;
     });
   }
 };

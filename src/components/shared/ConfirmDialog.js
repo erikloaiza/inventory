@@ -42,7 +42,7 @@ const ConfirmDialog = ({ confirmAction }) => {
         keepMounted
         onClose={handleClose}
         aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
+        aria-describedby="alert-dialog-slide-observation"
       >
         <DialogTitle id="alert-dialog-slide-title">
           Are you sure you want to Delete?

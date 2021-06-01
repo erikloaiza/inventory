@@ -52,16 +52,19 @@ const ProductDetail = props => {
               {product.name}
             </Typography>
             <Typography component="p">
-              <u>Category:</u> {product.category}
+              <u>Classification:</u> {product.clasification}
             </Typography>
             <Typography component="p">
-              <u>Model:</u> {product.model}
+              <u>Group:</u> {product.group}
+            </Typography>
+            <Typography component="p">
+              <u>Subgroup:</u> {product.subgroup}
             </Typography>
             <Typography component="p">
               <u>Price:</u> {formatPrice(product.price)}
             </Typography>
             <Typography component="p">
-              <u>Description:</u> {product.description}
+              <u>Observation:</u> {product.observation}
             </Typography>
             <Typography component="p">
               {moment(product.createdAt.toDate()).format(
@@ -91,9 +94,9 @@ const ProductDetail = props => {
               {'Product Barcode'}
             </Typography>
             <br />
-            <BarCode code={product.serial} />
+            <BarCode code={product.code} />
             <Typography component="h6">
-              {product.serial}
+              {product.code}
             </Typography>
             <Button variant="outlined" color="primary">
               Download

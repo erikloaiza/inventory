@@ -20,7 +20,7 @@ export const createTransaction = transactions => {
             .then(() => {
                 dispatch({ type: ADD_TRANSACTION_SUCCESS });
                 console.log(firestore.FieldValue.increment)
-                transactions.products.map(({ id, serial, total }) =>
+                transactions.products.map(({ id, code, total }) =>
                     firestore
                         .collection('products')
                         .doc(id)
